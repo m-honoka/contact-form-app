@@ -13,4 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-
+// ログイン後にリダイレクトされる管理画面トップの仮ルート
+Route::get('/admin', function () {
+    return '管理画面トップページ（ログイン成功！）';
+})->middleware(['auth']); // 💡 ログインしていないと入れないようにガードをかける
