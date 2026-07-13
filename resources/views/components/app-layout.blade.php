@@ -31,13 +31,6 @@
                 </div>
                 <div class="w-24 flex justify-end">
                     {{ $header }}
-                    <form method="POST" action="/logout" class="inline">
-                        @csrf
-                        <button type="submit"
-                            class="px-5 py-1.5 border border-[#ddd8d3] text-[#c4bab0] bg-white rounded hover:bg-gray-50 transition lowercase text-center whitespace-nowrap text-sm font-medium">
-                            {{ __('logout') }}
-                        </button>
-                    </form>
                 </div>
             </div>
         </header>
