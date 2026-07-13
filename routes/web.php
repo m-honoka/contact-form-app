@@ -5,3 +5,6 @@ use App\Http\Controllers\Admin\ContactController; // 💡 コントローラー�
 
 // 管理画面のトップページ（お問い合わせ一覧）のルート
 Route::get('/admin', [ContactController::class, 'index'])->middleware(['auth']);
+
+// 💡 【追記】詳細画面（{contact} にデータのIDが入ります）
+Route::get('/admin/contacts/{contact}', [ContactController::class, 'show'])->middleware(['auth']);
