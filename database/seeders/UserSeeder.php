@@ -2,9 +2,8 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use Illuminate\Database\Seeder;
-use App\Models\User; // 💡 Userモデルをインポート
+use App\Models\User;
+use Illuminate\Database\Seeder; // 💡 Userモデルをインポート
 use Illuminate\Support\Facades\Hash; // 💡 パスワードをハッシュ化するクラスをインポート
 
 class UserSeeder extends Seeder

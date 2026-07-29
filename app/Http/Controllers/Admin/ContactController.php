@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Contact;
 use App\Models\Category;
+use App\Models\Contact;
 use Illuminate\Http\Request;
-
+use App\Models\Tag;
 class ContactController extends Controller
 {
     // 🔍 検索＆一覧表示用のメソッド
@@ -14,6 +14,7 @@ class ContactController extends Controller
     {
         // 1. セレクトボックス用のカテゴリー全件取得
         $categories = Category::all();
+        $tags = Tag::all();
 
         // 2. 検索用のクエリビルダを開始
         $query = Contact::query();
@@ -42,11 +43,11 @@ class ContactController extends Controller
             $query->whereDate('created_at', $request->input('date'));
         }
 
-        // 3. 7件ごとにページネーションで取得
-        $contacts = $query->paginate(7);
+        // 3. 7件ごとにページネーションで取得、N+1問題を解決するためwith('category')を挟む形に修正
+        $contacts = $query->with('category')->paginate(7);
 
         // 4. データをビューに渡す
-        return view('admin.index', compact('categories', 'contacts'));
+        return view('admin.index', compact('categories', 'contacts', 'tags'));
     }
 
     // 💡 【追記】詳細表示用の show メソッド
