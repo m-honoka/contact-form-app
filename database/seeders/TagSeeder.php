@@ -2,9 +2,8 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use Illuminate\Database\Seeder;
 use App\Models\Tag;
+use Illuminate\Database\Seeder;
 
 class TagSeeder extends Seeder
 {
@@ -19,6 +18,6 @@ class TagSeeder extends Seeder
             ['name' => '不具合報告'],
             ['name' => 'ご意見'],
             ['name' => 'その他'],
-        ])->each(fn($data) => Tag::create($data));
+        ])->each(fn ($data) => Tag::create($data));
     }
 }
