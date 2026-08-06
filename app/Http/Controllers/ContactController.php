@@ -41,7 +41,7 @@ class ContactController extends Controller
         return view('contact.confirm', compact('validated', 'category', 'tags'));
     }
 
-    public function store(Request $request)
+    public function store(StoreContactRequest $request)
     {
         // 1. 送信されたデータから、DBに保存する項目を取得
         $data = $request->only([
