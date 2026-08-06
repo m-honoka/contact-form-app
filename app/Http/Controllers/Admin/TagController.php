@@ -22,7 +22,7 @@ class TagController extends Controller
             'name' => $request->name,
         ]);
 
-        return redirect()->back()->with('success', 'タグを追加しました');
+        return redirect('/admin')->with('success', 'タグを追加しました');
     }
 
     // 💡 タグ編集画面の表示
@@ -53,6 +53,7 @@ class TagController extends Controller
     {
         $tag->delete();
 
-        return redirect()->back()->with('success', 'タグを削除しました');
+        return redirect('/admin')->with('success', 'タグを削除しました');
     }
+
 }

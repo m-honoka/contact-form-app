@@ -21,7 +21,7 @@ class ContactFactory extends Factory
 
         return [
             // 既存のカテゴリからランダムに1つのIDを取得して紐付ける
-            'category_id' => Category::inRandomOrder()->first()->id,
+            'category_id' => Category::factory(),
 
             // 日本語の姓名
             'first_name' => $this->faker->lastName(),  // 姓
