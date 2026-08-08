@@ -16,36 +16,11 @@ class ContactController extends Controller
         $categories = Category::all();
         $tags = Tag::all();
 
-        // 2. 検索用のクエリビルダを開始
-        $query = Contact::query();
-
-        // A. 名前（部分一致）の絞り込み
-        if ($request->filled('keyword')) {
-            $keyword = $request->input('keyword');
-            $query->where(function ($q) use ($keyword) {
-                $q->where('last_name', 'like', '%' . $keyword . '%')
-                    ->orWhere('first_name', 'like', '%' . $keyword . '%');
-            });
-        }
-
-        // B. 性別の絞り込み
-        if ($request->filled('gender') && $request->input('gender') !== '0') {
-            $query->where('gender', $request->input('gender'));
-        }
-
-        // C. カテゴリの絞り込み
-        if ($request->filled('category_id')) {
-            $query->where('category_id', $request->input('category_id'));
-        }
-
-        // D. 日付の絞り込み
-        if ($request->filled('date')) {
-            $query->whereDate('created_at', $request->input('date'));
-        }
-
-        // 3. 7件ごとにページネーションで取得、N+1問題を解決するためwith('category')を挟む形に修正
-        $contacts = $query->with('category')->paginate(7);
-
+        // モデルの scopeSearch と リレーション（with）を活用
+        $contacts = Contact::search($request->all())
+            ->with('category')
+            ->latest() // 新しい順
+            ->paginate(7);
         // 4. データをビューに渡す
         return view('admin.index', compact('categories', 'contacts', 'tags'));
     }
