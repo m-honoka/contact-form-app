@@ -3,26 +3,17 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\TagRequest;
 use App\Models\Tag;
-use Illuminate\Http\Request;
 
 class TagController extends Controller
 {
     // 💡 タグの新規追加
-    public function store(Request $request)
+    public function store(TagRequest $request)
     {
-        $request->validate([
-            'name' => 'required|max:255|unique:tags,name',
-        ], [
-            'name.required' => 'タグ名を入力してください',
-            'name.unique' => 'そのタグ名は既に存在します',
-        ]);
+        Tag::create($request->validated());
 
-        Tag::create([
-            'name' => $request->name,
-        ]);
-
-        return redirect('/admin')->with('success', 'タグを追加しました');
+        return redirect()->route('admin.index')->with('success', 'タグを追加しました');
     }
 
     // 💡 タグ編集画面の表示
@@ -32,20 +23,11 @@ class TagController extends Controller
     }
 
     // 💡 タグの更新処理
-    public function update(Request $request, Tag $tag)
+    public function update(TagRequest $request, Tag $tag)
     {
-        $request->validate([
-            'name' => 'required|max:255|unique:tags,name,' . $tag->id,
-        ], [
-            'name.required' => 'タグ名を入力してください',
-            'name.unique' => 'そのタグ名は既に存在します',
-        ]);
+        $tag->update($request->validated());
 
-        $tag->update([
-            'name' => $request->name,
-        ]);
-
-        return redirect()->route('admin.index')->with('success', 'タグを更新しました'); // 管理画面のルーティング名に合わせて指定
+        return redirect()->route('admin.index')->with('success', 'タグを更新しました');
     }
 
     // 💡 タグの削除
@@ -53,7 +35,6 @@ class TagController extends Controller
     {
         $tag->delete();
 
-        return redirect('/admin')->with('success', 'タグを削除しました');
+        return redirect()->route('admin.index')->with('success', 'タグを削除しました');
     }
-
 }
